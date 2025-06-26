@@ -39,4 +39,12 @@ class UserName {
       throw Exception('ユーザ名は3文字以上です');
     }
   }
+
+  @override
+  operator ==(Object other) {
+    if (other is UserName) {
+      return value == other.value;
+    }
+    return false;
+  }
 }
