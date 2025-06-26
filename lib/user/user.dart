@@ -1,9 +1,22 @@
+import 'package:flutter_ddd_introduction/user/user_service.dart';
+
 void check(User left, User right) {
   if (left == right) {
     print('同じユーザです');
   } else {
     print('異なるユーザです');
   }
+}
+
+void createUser(String userName) {
+  final user = User(name: UserName(userName), id: "id");
+
+  var userService = UserService();
+  if (userService.exists(user)) {
+    throw Exception('$userNameはすでに存在します');
+  }
+
+  // SQLでユーザ情報を永続化
 }
 
 class User {
