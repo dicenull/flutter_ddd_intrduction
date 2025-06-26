@@ -30,11 +30,6 @@ class User {
     return false;
   }
 
-  // TODO: 本当にexistsはUserのメソッドで良いのか？
-  bool exists(User other) {
-    return this == other;
-  }
-
   @override
   int get hashCode => id.hashCode;
 }

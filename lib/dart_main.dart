@@ -1,11 +1,14 @@
 import 'package:flutter_ddd_introduction/user.dart';
+import 'package:flutter_ddd_introduction/user_service.dart';
 
 void main() {
+  final userService = UserService();
+
   final userId = "id";
   final userName = "dice";
   final user = User(id: userId, name: userName);
 
-  // 1ユーザが自分で重複を確認するのは不自然
-  final duplicateCheckResult = user.exists(user);
+  // ドメインサービスに重複を問い合わせ
+  final duplicateCheckResult = userService.exists(user);
   print(duplicateCheckResult);
 }
