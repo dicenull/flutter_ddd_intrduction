@@ -5,7 +5,7 @@ void main() {
   final userService = UserService();
 
   final userId = "id";
-  final userName = "dice";
+  final userName = UserName("dice");
   final user = User(id: userId, name: userName);
 
   // ドメインサービスに重複を問い合わせ

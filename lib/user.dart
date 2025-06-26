@@ -8,16 +8,13 @@ void check(User left, User right) {
 
 class User {
   final String id;
-  String? name;
+  UserName? name;
 
-  User({required this.id, required String name}) {
+  User({required this.id, required UserName name}) {
     changeUserName(name);
   }
 
-  void changeUserName(String name) {
-    if (name.length < 3) {
-      throw Exception('ユーザ名は3文字以上です');
-    }
+  void changeUserName(UserName name) {
     this.name = name;
   }
 
@@ -32,4 +29,14 @@ class User {
 
   @override
   int get hashCode => id.hashCode;
+}
+
+class UserName {
+  final String value;
+
+  UserName(this.value) {
+    if (value.length < 3) {
+      throw Exception('ユーザ名は3文字以上です');
+    }
+  }
 }
