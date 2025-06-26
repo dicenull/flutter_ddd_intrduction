@@ -9,7 +9,7 @@ class Program {
   void createUser(String userName) {
     final user = User(name: UserName(userName), id: "id");
 
-    var userService = UserService();
+    var userService = UserService(_userRepository);
     if (userService.exists(user)) {
       throw Exception('$userNameはすでに存在します');
     }

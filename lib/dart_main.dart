@@ -2,7 +2,8 @@ import 'package:flutter_ddd_introduction/user/user.dart';
 import 'package:flutter_ddd_introduction/user/user_service.dart';
 
 void main() {
-  final userService = UserService();
+  final userRepository = null; // 仮
+  final userService = UserService(userRepository);
 
   final userId = "id";
   final userName = UserName("dice");
