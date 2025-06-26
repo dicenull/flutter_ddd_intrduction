@@ -1,7 +1,11 @@
 import 'package:flutter_ddd_introduction/user/user.dart';
+import 'package:flutter_ddd_introduction/user/user_repository.dart';
 import 'package:flutter_ddd_introduction/user/user_service.dart';
 
 class Program {
+  final IUserRepository _userRepository;
+  Program(this._userRepository);
+
   void createUser(String userName) {
     final user = User(name: UserName(userName), id: "id");
 
@@ -10,6 +14,6 @@ class Program {
       throw Exception('$userNameはすでに存在します');
     }
 
-    // SQLでユーザ情報を永続化
+    _userRepository.save(user);
   }
 }
