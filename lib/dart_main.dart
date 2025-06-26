@@ -1,5 +1,5 @@
-import 'package:flutter_ddd_introduction/user.dart';
-import 'package:flutter_ddd_introduction/user_service.dart';
+import 'package:flutter_ddd_introduction/user/user.dart';
+import 'package:flutter_ddd_introduction/user/user_service.dart';
 
 void main() {
   final userService = UserService();

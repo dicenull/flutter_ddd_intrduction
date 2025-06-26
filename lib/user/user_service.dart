@@ -1,4 +1,4 @@
-import 'package:flutter_ddd_introduction/user.dart';
+import 'package:flutter_ddd_introduction/user/user.dart';
 
 class UserService {
   bool exists(User user) {
