@@ -1,7 +1,11 @@
 import 'package:flutter_ddd_introduction/user.dart';
 
 void main() {
-  final leftUser = User(id: '1', name: 'Alice');
-  final rightUser = User(id: '1', name: 'Bob');
-  check(leftUser, rightUser); // 同じユーザです 名前が違ってもIDが同じなら同一のユーザ
+  final userId = "id";
+  final userName = "dice";
+  final user = User(id: userId, name: userName);
+
+  // 1ユーザが自分で重複を確認するのは不自然
+  final duplicateCheckResult = user.exists(user);
+  print(duplicateCheckResult);
 }
