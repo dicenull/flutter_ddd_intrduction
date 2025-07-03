@@ -19,9 +19,13 @@ class UserApplicationService {
     _userRepository.save(user);
   }
 
-  UserData get(String userId) {
+  UserData? get(String userId) {
     final targetId = UserId(userId);
     final user = _userRepository.findById(targetId);
+
+    if (user == null) {
+      return null;
+    }
 
     final userData = UserData(user);
     return userData;
