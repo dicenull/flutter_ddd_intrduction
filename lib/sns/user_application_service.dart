@@ -1,4 +1,5 @@
 import 'package:flutter_ddd_introduction/sns/user.dart';
+import 'package:flutter_ddd_introduction/sns/user_data.dart';
 import 'package:flutter_ddd_introduction/sns/user_repository.dart';
 import 'package:flutter_ddd_introduction/sns/user_service.dart';
 
@@ -16,6 +17,14 @@ class UserApplicationService {
     }
 
     _userRepository.save(user);
+  }
+
+  UserData get(String userId) {
+    final targetId = UserId(userId);
+    final user = _userRepository.findById(targetId);
+
+    final userData = UserData(user.id.value, user.name.value);
+    return userData;
   }
 }
 
