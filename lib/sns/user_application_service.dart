@@ -47,6 +47,18 @@ class UserApplicationService {
 
     _userRepository.save(user);
   }
+
+  void delete(String userId) {
+    final targetId = UserId(userId);
+    final user = _userRepository.findById(targetId);
+
+    if (user == null) {
+      // ユーザが見つからなかったため、退会成功とする
+      return;
+    }
+
+    _userRepository.delete(user);
+  }
 }
 
 class UserNotFoundException implements Exception {
