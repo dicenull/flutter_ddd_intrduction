@@ -23,7 +23,7 @@ class UserApplicationService {
     final targetId = UserId(userId);
     final user = _userRepository.findById(targetId);
 
-    final userData = UserData(user.id.value, user.name.value);
+    final userData = UserData(user);
     return userData;
   }
 }
