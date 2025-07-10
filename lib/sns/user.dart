@@ -32,6 +32,17 @@ class UserId {
       throw Exception('ユーザIDは空にできません');
     }
   }
+
+  @override
+  operator ==(Object other) {
+    if (other is UserId) {
+      return value == other.value;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
 }
 
 class UserName {
@@ -45,4 +56,15 @@ class UserName {
       throw Exception('ユーザ名は20文字以下です');
     }
   }
+
+  @override
+  operator ==(Object other) {
+    if (other is UserName) {
+      return value == other.value;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
 }
