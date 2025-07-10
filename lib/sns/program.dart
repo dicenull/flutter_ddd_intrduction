@@ -6,19 +6,19 @@ import 'package:flutter_ddd_introduction/sns/user_repository.dart';
 import 'package:flutter_ddd_introduction/sns/user_service.dart';
 import 'package:riverpod/riverpod.dart';
 
-final userRepository = Provider<IUserRepository>((ref) {
+final userRepositoryPod = Provider<IUserRepository>((ref) {
   return InMemoryUserRepository();
 });
 
-final userService = Provider.autoDispose<UserService>((ref) {
-  return UserService(ref.watch(userRepository));
+final userServicePod = Provider.autoDispose<UserService>((ref) {
+  return UserService(ref.watch(userRepositoryPod));
 });
 
-final userApplicationService = Provider.autoDispose<UserApplicationService>((
+final userApplicationServicePod = Provider.autoDispose<UserApplicationService>((
   ref,
 ) {
-  final repo = ref.watch(userRepository);
-  final service = ref.watch(userService);
+  final repo = ref.watch(userRepositoryPod);
+  final service = ref.watch(userServicePod);
   return UserApplicationService(repo, service);
 });
 
@@ -34,7 +34,7 @@ class Program {
       print(">");
       final input = stdin.readLineSync();
 
-      final appService = ref.read(userApplicationService);
+      final appService = ref.read(userApplicationServicePod);
       if (input == null || input.isEmpty) {
         print("User name cannot be empty.");
         continue;
