@@ -1,6 +1,6 @@
 import 'package:flutter_ddd_introduction/sns/user.dart';
 
-abstract interface class IUserRepository {
+abstract class IUserRepository {
   User? findById(UserId id);
 
   /// ユーザ名でユーザを検索する
