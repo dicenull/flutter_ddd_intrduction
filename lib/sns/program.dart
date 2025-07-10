@@ -1,13 +1,17 @@
 import 'dart:io';
 
-import 'package:flutter_ddd_introduction/sns/in_memory_user_repository.dart';
 import 'package:flutter_ddd_introduction/sns/user_application_service.dart';
+import 'package:flutter_ddd_introduction/sns/user_factory.dart';
 import 'package:flutter_ddd_introduction/sns/user_repository.dart';
 import 'package:flutter_ddd_introduction/sns/user_service.dart';
 import 'package:riverpod/riverpod.dart';
 
-final userRepositoryPod = Provider<IUserRepository>((ref) {
-  return InMemoryUserRepository();
+final userRepositoryPod = Provider<IUserRepository>(
+  (ref) => throw UnimplementedError(),
+);
+
+final userFactoryPod = Provider.autoDispose<IUserFactory>((ref) {
+  throw UnimplementedError();
 });
 
 final userServicePod = Provider.autoDispose<UserService>((ref) {
@@ -19,7 +23,9 @@ final userApplicationServicePod = Provider.autoDispose<UserApplicationService>((
 ) {
   final repo = ref.watch(userRepositoryPod);
   final service = ref.watch(userServicePod);
-  return UserApplicationService(repo, service);
+  final factory = ref.watch(userFactoryPod);
+
+  return UserApplicationService(repo, service, factory);
 });
 
 class Program {

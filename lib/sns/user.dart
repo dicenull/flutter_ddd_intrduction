@@ -1,5 +1,3 @@
-import 'package:uuid/uuid.dart';
-
 class User {
   late UserId _id;
   late UserName _name;
@@ -7,9 +5,9 @@ class User {
   UserId get id => _id;
   UserName get name => _name;
 
-  User(UserName name) {
+  User(UserId id, UserName name) {
     // (name == null)はコンパイルエラーになるので省略
-    _id = UserId(Uuid().v4());
+    _id = id;
     _name = name;
   }
 

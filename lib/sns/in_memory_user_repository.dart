@@ -22,7 +22,7 @@ class InMemoryUserRepository extends IUserRepository {
   }
 
   User _clone(User user) {
-    return User(user.name);
+    return User(user.id, user.name);
   }
 
   @override
