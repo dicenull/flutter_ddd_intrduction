@@ -1,3 +1,4 @@
+import 'package:flutter_ddd_introduction/sns/in_memory_user_factory.dart';
 import 'package:flutter_ddd_introduction/sns/in_memory_user_repository.dart';
 import 'package:flutter_ddd_introduction/sns/program.dart';
 import 'package:flutter_ddd_introduction/sns/user.dart';
@@ -7,17 +8,25 @@ import 'create_container.dart';
 
 void main() {
   group('ユーザ登録', () {
-    test('ユーザが最小の文字列で登録できる', () {
+    buildSut() {
       final container = createContainer(
         overrides: [
           userRepositoryPod.overrideWithValue(InMemoryUserRepository()),
+          userFactoryPod.overrideWithValue(InMemoryUserFactory()),
         ],
       );
 
       final userRepository = container.read(userRepositoryPod);
       final userApplicationService = container.read(userApplicationServicePod);
+      final userFactory = container.read(userFactoryPod);
 
       container.listen(userApplicationServicePod, (_, __) {});
+
+      return (userRepository, userApplicationService, userFactory);
+    }
+
+    test('ユーザが最小の文字列で登録できる', () {
+      final (userRepository, userApplicationService, _) = buildSut();
 
       userApplicationService.register("123");
 
@@ -25,83 +34,53 @@ void main() {
       final user = userRepository.findByName(UserName("123"));
       expect(user, isNotNull);
     });
-  });
 
-  test('ユーザが最大の文字列で登録できる', () {
-    final container = createContainer(
-      overrides: [
-        userRepositoryPod.overrideWithValue(InMemoryUserRepository()),
-      ],
-    );
+    test('ユーザが最大の文字列で登録できる', () {
+      final (userRepository, userApplicationService, _) = buildSut();
 
-    final userRepository = container.read(userRepositoryPod);
-    final userApplicationService = container.read(userApplicationServicePod);
+      userApplicationService.register("12345678901234567890");
 
-    container.listen(userApplicationServicePod, (_, __) {});
+      // assert
+      final user = userRepository.findByName(UserName("12345678901234567890"));
+      expect(user, isNotNull);
+    });
 
-    userApplicationService.register("12345678901234567890");
+    test('ユーザ名は最小の文字列未満で登録できない', () {
+      final (_, userApplicationService, _) = buildSut();
 
-    // assert
-    final user = userRepository.findByName(UserName("12345678901234567890"));
-    expect(user, isNotNull);
-  });
+      bool exceptionOccurred = false;
+      try {
+        userApplicationService.register("12");
+      } catch (e) {
+        exceptionOccurred = true;
+      }
+      expect(exceptionOccurred, isTrue);
+    });
 
-  test('ユーザ名は最小の文字列未満で登録できない', () {
-    final container = createContainer(
-      overrides: [
-        userRepositoryPod.overrideWithValue(InMemoryUserRepository()),
-      ],
-    );
+    test('ユーザ名は最大の文字列を超えて登録できない', () {
+      final (_, userApplicationService, _) = buildSut();
 
-    final userApplicationService = container.read(userApplicationServicePod);
-    container.listen(userApplicationServicePod, (_, __) {});
+      bool exceptionOccurred = false;
+      try {
+        userApplicationService.register("123456789012345678901");
+      } catch (e) {
+        exceptionOccurred = true;
+      }
+      expect(exceptionOccurred, isTrue);
+    });
 
-    bool exceptionOccurred = false;
-    try {
-      userApplicationService.register("12");
-    } catch (e) {
-      exceptionOccurred = true;
-    }
-    expect(exceptionOccurred, isTrue);
-  });
+    test('重複したユーザ名で登録できない', () {
+      final (userRepository, userApplicationService, userFactory) = buildSut();
 
-  test('ユーザ名は最大の文字列を超えて登録できない', () {
-    final container = createContainer(
-      overrides: [
-        userRepositoryPod.overrideWithValue(InMemoryUserRepository()),
-      ],
-    );
+      userRepository.save(userFactory.create(UserName("test-user")));
 
-    final userApplicationService = container.read(userApplicationServicePod);
-    container.listen(userApplicationServicePod, (_, __) {});
-
-    bool exceptionOccurred = false;
-    try {
-      userApplicationService.register("123456789012345678901");
-    } catch (e) {
-      exceptionOccurred = true;
-    }
-    expect(exceptionOccurred, isTrue);
-  });
-
-  test('重複したユーザ名で登録できない', () {
-    final container = createContainer(
-      overrides: [
-        userRepositoryPod.overrideWithValue(InMemoryUserRepository()),
-      ],
-    );
-    final userRepository = container.read(userRepositoryPod);
-    final userApplicationService = container.read(userApplicationServicePod);
-
-    container.listen(userApplicationServicePod, (_, __) {});
-    userRepository.save(User(UserName("test-user")));
-
-    bool exceptionOccurred = false;
-    try {
-      userApplicationService.register("test-user");
-    } catch (e) {
-      exceptionOccurred = true;
-    }
-    expect(exceptionOccurred, isTrue);
+      bool exceptionOccurred = false;
+      try {
+        userApplicationService.register("test-user");
+      } catch (e) {
+        exceptionOccurred = true;
+      }
+      expect(exceptionOccurred, isTrue);
+    });
   });
 }
