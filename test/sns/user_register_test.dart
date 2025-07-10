@@ -26,4 +26,23 @@ void main() {
       expect(user, isNotNull);
     });
   });
+
+  test('ユーザが最大の文字列で登録できる', () {
+    final container = createContainer(
+      overrides: [
+        userRepositoryPod.overrideWithValue(InMemoryUserRepository()),
+      ],
+    );
+
+    final userRepository = container.read(userRepositoryPod);
+    final userApplicationService = container.read(userApplicationServicePod);
+
+    container.listen(userApplicationServicePod, (_, __) {});
+
+    userApplicationService.register("12345678901234567890");
+
+    // assert
+    final user = userRepository.findByName(UserName("12345678901234567890"));
+    expect(user, isNotNull);
+  });
 }
