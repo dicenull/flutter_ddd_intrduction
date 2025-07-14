@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_ddd_introduction/sns/unit_of_work.dart';
 import 'package:flutter_ddd_introduction/sns/user_application_service.dart';
 import 'package:flutter_ddd_introduction/sns/user_factory.dart';
 import 'package:flutter_ddd_introduction/sns/user_repository.dart';
@@ -24,8 +25,9 @@ final userApplicationServicePod = Provider.autoDispose<UserApplicationService>((
   final repo = ref.watch(userRepositoryPod);
   final service = ref.watch(userServicePod);
   final factory = ref.watch(userFactoryPod);
+  final uow = UnitOfWork.current;
 
-  return UserApplicationService(repo, service, factory);
+  return UserApplicationService(uow, repo, service, factory);
 });
 
 class Program {

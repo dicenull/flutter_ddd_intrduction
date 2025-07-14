@@ -1,4 +1,6 @@
-class User {
+import 'package:flutter_ddd_introduction/sns/unit_of_work.dart';
+
+class User with Entity {
   late UserId _id;
   late UserName _name;
 
@@ -9,6 +11,7 @@ class User {
     // (name == null)はコンパイルエラーになるので省略
     _id = id;
     _name = name;
+    markNew();
   }
 
   User.rename(UserId id, UserName name) {
@@ -18,7 +21,8 @@ class User {
   }
 
   void changeName(UserName name) {
-    name = name;
+    _name = name;
+    markDirty();
   }
 }
 

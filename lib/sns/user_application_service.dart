@@ -1,3 +1,4 @@
+import 'package:flutter_ddd_introduction/sns/unit_of_work.dart';
 import 'package:flutter_ddd_introduction/sns/user.dart';
 import 'package:flutter_ddd_introduction/sns/user_data.dart';
 import 'package:flutter_ddd_introduction/sns/user_factory.dart';
@@ -5,11 +6,13 @@ import 'package:flutter_ddd_introduction/sns/user_repository.dart';
 import 'package:flutter_ddd_introduction/sns/user_service.dart';
 
 class UserApplicationService {
+  final UnitOfWork _uow;
   final IUserRepository _userRepository;
   final UserService _userService;
   final IUserFactory _userFactory;
 
   UserApplicationService(
+    this._uow,
     this._userRepository,
     this._userService,
     this._userFactory,
@@ -23,6 +26,7 @@ class UserApplicationService {
     }
 
     _userRepository.save(user);
+    _uow.commit();
   }
 
   UserData? get(String userId) {
