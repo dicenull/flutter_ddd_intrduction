@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:flutter_ddd_introduction/sns/user.dart';
-import 'package:flutter_ddd_introduction/sns/user_repository.dart';
+import 'package:flutter_ddd_introduction/sns/user/user.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_repository.dart';
 
 class InMemoryUserRepository extends IUserRepository {
   final Map<UserId, User> store = {};

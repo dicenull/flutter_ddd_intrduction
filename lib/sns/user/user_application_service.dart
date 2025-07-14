@@ -1,9 +1,9 @@
 import 'package:flutter_ddd_introduction/sns/unit_of_work.dart';
-import 'package:flutter_ddd_introduction/sns/user.dart';
-import 'package:flutter_ddd_introduction/sns/user_data.dart';
-import 'package:flutter_ddd_introduction/sns/user_factory.dart';
-import 'package:flutter_ddd_introduction/sns/user_repository.dart';
-import 'package:flutter_ddd_introduction/sns/user_service.dart';
+import 'package:flutter_ddd_introduction/sns/user/user.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_data.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_factory.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_repository.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_service.dart';
 
 class UserApplicationService {
   final UnitOfWork _uow;

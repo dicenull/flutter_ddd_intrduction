@@ -1,5 +1,5 @@
-import 'package:flutter_ddd_introduction/sns/user.dart';
-import 'package:flutter_ddd_introduction/sns/user_repository.dart';
+import 'package:flutter_ddd_introduction/sns/user/user.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_repository.dart';
 
 class UserService {
   final IUserRepository _userRepository;

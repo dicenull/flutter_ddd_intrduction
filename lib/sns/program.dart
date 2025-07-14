@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter_ddd_introduction/sns/unit_of_work.dart';
-import 'package:flutter_ddd_introduction/sns/user_application_service.dart';
-import 'package:flutter_ddd_introduction/sns/user_factory.dart';
-import 'package:flutter_ddd_introduction/sns/user_repository.dart';
-import 'package:flutter_ddd_introduction/sns/user_service.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_application_service.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_factory.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_repository.dart';
+import 'package:flutter_ddd_introduction/sns/user/user_service.dart';
 import 'package:riverpod/riverpod.dart';
 
 final userRepositoryPod = Provider<IUserRepository>(

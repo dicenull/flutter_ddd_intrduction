@@ -1,7 +1,7 @@
-import 'package:flutter_ddd_introduction/sns/in_memory_user_factory.dart';
-import 'package:flutter_ddd_introduction/sns/in_memory_user_repository.dart';
 import 'package:flutter_ddd_introduction/sns/program.dart';
-import 'package:flutter_ddd_introduction/sns/user.dart';
+import 'package:flutter_ddd_introduction/sns/user/in_memory_user_factory.dart';
+import 'package:flutter_ddd_introduction/sns/user/in_memory_user_repository.dart';
+import 'package:flutter_ddd_introduction/sns/user/user.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'create_container.dart';
