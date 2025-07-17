@@ -1,5 +1,7 @@
 import 'package:flutter_ddd_introduction/sns/circle/circle_create_command.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_factory.dart';
+import 'package:flutter_ddd_introduction/sns/circle/circle_id.dart';
+import 'package:flutter_ddd_introduction/sns/circle/circle_join_command.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_name.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_repository.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_service.dart';
@@ -39,6 +41,41 @@ class CircleApplicationService {
 
     _circleRepository.save(circle);
   }
+
+  void join(CircleJoinCommand command) {
+    // 本当はトランザクションをとる
+    final memberId = UserId(command.userId);
+
+    final member = _userRepository.findById(memberId);
+    if (member == null) {
+      throw UserNotFoundException('${command.userId}というユーザーが見つかりません');
+    }
+
+    final id = CircleId(command.circleId);
+    final circle = _circleRepository.find(id);
+    if (circle == null) {
+      throw CircleNotFoundException('${command.circleId}というサークルが見つかりません');
+    }
+
+    if (circle.members.length >= 29) {
+      throw CircleFullException('サークルは最大30人までしか参加できません: $id');
+    }
+
+    circle.members.add(member);
+    _circleRepository.save(circle);
+  }
+}
+
+class CircleFullException implements Exception {
+  final String message;
+
+  CircleFullException(this.message);
+}
+
+class CircleNotFoundException implements Exception {
+  final String message;
+
+  CircleNotFoundException(this.message);
 }
 
 class CircleAlreadyExistsException implements Exception {
