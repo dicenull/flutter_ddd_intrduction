@@ -57,19 +57,9 @@ class CircleApplicationService {
       throw CircleNotFoundException('${command.circleId}というサークルが見つかりません');
     }
 
-    if (circle.members.length >= 29) {
-      throw CircleFullException('サークルは最大30人までしか参加できません: $id');
-    }
-
-    circle.members.add(member);
+    circle.join(member);
     _circleRepository.save(circle);
   }
-}
-
-class CircleFullException implements Exception {
-  final String message;
-
-  CircleFullException(this.message);
 }
 
 class CircleNotFoundException implements Exception {

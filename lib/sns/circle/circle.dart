@@ -6,12 +6,28 @@ class Circle {
   final CircleId id;
   final CircleName name;
   final User user;
-  final List<User> members;
+  final List<User> _members;
 
   Circle({
     required this.id,
     required this.name,
     required this.user,
     List<User>? members,
-  }) : members = members ?? [];
+  }) : _members = members ?? [];
+
+  bool get isFull => _members.length >= 29;
+
+  void join(User member) {
+    if (isFull) {
+      throw CircleFullException('サークルはオーナを含めて最大30人までしか参加できません');
+    }
+
+    _members.add(member);
+  }
+}
+
+class CircleFullException implements Exception {
+  final String message;
+
+  CircleFullException(this.message);
 }
