@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_id.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_name.dart';
 import 'package:flutter_ddd_introduction/sns/user/user.dart';
@@ -7,13 +6,13 @@ class Circle {
   final CircleId id;
   final CircleName name;
   final User user;
-  final List<User> _members;
+  final List<UserId> _members;
 
   Circle({
     required this.id,
     required this.name,
     required this.user,
-    List<User>? members,
+    List<UserId>? members,
   }) : _members = members ?? [];
 
   bool get isFull => _members.length >= 29;
@@ -23,14 +22,7 @@ class Circle {
       throw CircleFullException('サークルはオーナを含めて最大30人までしか参加できません');
     }
 
-    _members.add(member);
-  }
-
-  void changeMemberUserName(UserId id, UserName name) {
-    final member = _members.firstWhereOrNull((m) => m.id == id);
-    if (member != null) {
-      member.changeName(name);
-    }
+    _members.add(member.id);
   }
 }
 
