@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_id.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_name.dart';
 import 'package:flutter_ddd_introduction/sns/user/user.dart';
@@ -23,6 +24,13 @@ class Circle {
     }
 
     _members.add(member);
+  }
+
+  void changeMemberUserName(UserId id, UserName name) {
+    final member = _members.firstWhereOrNull((m) => m.id == id);
+    if (member != null) {
+      member.changeName(name);
+    }
   }
 }
 
