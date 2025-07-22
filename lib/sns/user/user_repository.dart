@@ -11,4 +11,6 @@ abstract class IUserRepository {
 
   /// ユーザを削除する
   void delete(User user);
+
+  List<User> find(List<UserId> members);
 }

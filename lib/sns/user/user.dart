@@ -3,18 +3,19 @@ import 'package:flutter_ddd_introduction/sns/unit_of_work.dart';
 class User with Entity {
   late UserId _id;
   late UserName _name;
+  final bool isPremium;
 
   UserId get id => _id;
   UserName get name => _name;
 
-  User(UserId id, UserName name) {
+  User(UserId id, UserName name, {this.isPremium = false}) {
     // (name == null)はコンパイルエラーになるので省略
     _id = id;
     _name = name;
     markNew();
   }
 
-  User.rename(UserId id, UserName name) {
+  User.rename(UserId id, UserName name, {this.isPremium = false}) {
     // (id == null)はコンパイルエラーになるので省略
     _id = id;
     _name = name;

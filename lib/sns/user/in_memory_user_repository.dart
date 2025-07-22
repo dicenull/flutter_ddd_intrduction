@@ -35,4 +35,9 @@ class InMemoryUserRepository extends IUserRepository {
     // TODO: implement findById
     throw UnimplementedError();
   }
+
+  @override
+  find(List<UserId> members) {
+    return members.map((id) => store[id]).whereType<User>().toList();
+  }
 }
