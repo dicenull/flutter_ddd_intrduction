@@ -15,7 +15,9 @@ class Circle {
     List<UserId>? members,
   }) : _members = members ?? [];
 
-  bool get isFull => _members.length >= 29;
+  bool get isFull => memberCount >= 30;
+
+  int get memberCount => _members.length + 1; // オーナーを含む
 
   void join(User member) {
     if (isFull) {
