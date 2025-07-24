@@ -81,6 +81,34 @@ class CircleApplicationService {
         .take(10)
         .toList();
   }
+
+  void getSummaries(CircleGetSummariesCommand command) {
+    final all = _circleRepository.findAll();
+    final circles = all
+        .skip((command.page - 1) * command.size)
+        .take(command.size);
+
+    final summaries = <CircleSummaryData>[];
+    for (final circle in circles) {
+      final owner = _userRepository.findById(circle.owner.id);
+
+      summaries.add(CircleSummaryData(id: circle.id, name: owner!.name));
+    }
+  }
+}
+
+class CircleSummaryData {
+  final CircleId id;
+  final UserName name;
+
+  CircleSummaryData({required this.id, required this.name});
+}
+
+class CircleGetSummariesCommand {
+  final int page;
+  final int size;
+
+  CircleGetSummariesCommand(this.page, this.size);
 }
 
 class CircleNotFoundException implements Exception {

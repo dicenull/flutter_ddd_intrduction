@@ -19,6 +19,8 @@ class Circle {
 
   int get memberCount => _members.length + 1;
 
+  User get owner => user;
+
   List<UserId> get members => _members;
 
   void join(User member) {
