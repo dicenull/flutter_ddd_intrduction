@@ -76,8 +76,10 @@ class CircleApplicationService {
     final executeDateTime = DateTime.now();
     final specification = CircleRecommendSpecification(executeDateTime);
 
-    final circles = _circleRepository.findAll();
-    return circles.where(specification.isSatisfiedBy).take(10).toList();
+    return _circleRepository
+        .findBySpecification(specification)
+        .take(10)
+        .toList();
   }
 }
 
