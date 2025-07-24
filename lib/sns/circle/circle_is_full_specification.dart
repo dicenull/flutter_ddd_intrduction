@@ -1,10 +1,12 @@
 import 'package:flutter_ddd_introduction/sns/circle/circle.dart';
+import 'package:flutter_ddd_introduction/sns/circle/specification_interface.dart';
 import 'package:flutter_ddd_introduction/sns/user/user_repository.dart';
 
-class CircleIsFullSpecification {
+class CircleIsFullSpecification implements ISpecification<Circle> {
   final IUserRepository _userRepository;
   CircleIsFullSpecification(this._userRepository);
 
+  @override
   bool isSatisfiedBy(Circle circle) {
     final users = _userRepository.find(circle.members);
 
