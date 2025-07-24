@@ -1,9 +1,11 @@
+import 'package:flutter_ddd_introduction/sns/circle/circle.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_create_command.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_factory.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_id.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_is_full_specification.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_join_command.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_name.dart';
+import 'package:flutter_ddd_introduction/sns/circle/circle_recommend_specification.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_repository.dart';
 import 'package:flutter_ddd_introduction/sns/circle/circle_service.dart';
 import 'package:flutter_ddd_introduction/sns/user/user.dart';
@@ -68,6 +70,14 @@ class CircleApplicationService {
 
     circle.join(member);
     _circleRepository.save(circle);
+  }
+
+  List<Circle> getRecommend() {
+    final executeDateTime = DateTime.now();
+    final specification = CircleRecommendSpecification(executeDateTime);
+
+    final circles = _circleRepository.findAll();
+    return circles.where(specification.isSatisfiedBy).take(10).toList();
   }
 }
 

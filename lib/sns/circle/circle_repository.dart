@@ -6,4 +6,5 @@ abstract class ICircleRepository {
   void save(Circle circle);
   Circle? find(CircleId id);
   Circle? findByName(CircleName name);
+  List<Circle> findAll();
 }

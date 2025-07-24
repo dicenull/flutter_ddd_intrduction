@@ -7,13 +7,15 @@ class Circle {
   final CircleName name;
   final User user;
   final List<UserId> _members;
+  final DateTime createdAt;
 
   Circle({
     required this.id,
     required this.name,
     required this.user,
     List<UserId>? members,
-  }) : _members = members ?? [];
+  }) : _members = members ?? [],
+       createdAt = DateTime.now();
 
   int get memberCount => _members.length + 1;
 
@@ -22,10 +24,4 @@ class Circle {
   void join(User member) {
     _members.add(member.id);
   }
-}
-
-class CircleFullException implements Exception {
-  final String message;
-
-  CircleFullException(this.message);
 }
